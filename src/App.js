@@ -1,8 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
-import Form from "./components/Form";
 import FilterButton from "./components/FilterButton";
 import Todo from "./components/Todo";
-import { nanoid } from "nanoid";
 
 function usePrevious(value) {
   const ref = useRef();
@@ -37,23 +35,6 @@ function App(props) {
     setTasks(updatedTasks);
   }
 
-  function deleteTask(id) {
-    const remainingTasks = tasks.filter((task) => id !== task.id);
-    setTasks(remainingTasks);
-  }
-
-  function editTask(id, newName) {
-    const editedTaskList = tasks.map((task) => {
-      // if this task has the same ID as the edited task
-      if (id === task.id) {
-        //
-        return { ...task, name: newName };
-      }
-      return task;
-    });
-    setTasks(editedTaskList);
-  }
-
   const taskList = tasks
     .filter(FILTER_MAP[filter])
     .map((task) => (
@@ -63,8 +44,6 @@ function App(props) {
         completed={task.completed}
         key={task.id}
         toggleTaskCompleted={toggleTaskCompleted}
-        deleteTask={deleteTask}
-        editTask={editTask}
       />
     ));
 
@@ -76,11 +55,6 @@ function App(props) {
       setFilter={setFilter}
     />
   ));
-
-  function addTask(name) {
-    const newTask = { id: "todo-" + nanoid(), name: name, completed: false };
-    setTasks([...tasks, newTask]);
-  }
 
   const tasksNoun = taskList.length !== 1 ? "tasks" : "task";
   const headingText = `${taskList.length} ${tasksNoun} remaining`;
@@ -96,7 +70,6 @@ function App(props) {
 
   return (
     <div className="todoapp stack-large">
-      <Form addTask={addTask} />
       <div className="filters btn-group stack-exception">{filterList}</div>
       <h2 id="list-heading" tabIndex="-1" ref={listHeadingRef}>
         {headingText}
