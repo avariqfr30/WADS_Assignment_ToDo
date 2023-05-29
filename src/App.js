@@ -12,38 +12,38 @@ function usePrevious(value) {
 
 const FILTER_MAP = {
   All: () => true,
-  Active: (task) => !task.completed,
-  Completed: (task) => task.completed,
+  Active: (assignment) => !assignment.completed,
+  Completed: (assignment) => assignment.completed,
 };
 
 const FILTER_NAMES = Object.keys(FILTER_MAP);
 
 function App(props) {
-  const [tasks, setTasks] = useState(props.tasks);
+  const [assignments, setassignments] = useState(props.assignments);
   const [filter, setFilter] = useState("All");
 
-  function toggleTaskCompleted(id) {
-    const updatedTasks = tasks.map((task) => {
-      // if this task has the same ID as the edited task
-      if (id === task.id) {
+  function toggleassignmentCompleted(id) {
+    const updatedassignments = assignments.map((assignment) => {
+      // if this assignment has the same ID as the edited assignment
+      if (id === assignment.id) {
         // use object spread to make a new obkect
         // whose `completed` prop has been inverted
-        return { ...task, completed: !task.completed };
+        return { ...assignment, completed: !assignment.completed };
       }
-      return task;
+      return assignment;
     });
-    setTasks(updatedTasks);
+    setassignments(updatedassignments);
   }
 
-  const taskList = tasks
+  const assignmentList = assignments
     .filter(FILTER_MAP[filter])
-    .map((task) => (
+    .map((assignment) => (
       <Todo
-        id={task.id}
-        name={task.name}
-        completed={task.completed}
-        key={task.id}
-        toggleTaskCompleted={toggleTaskCompleted}
+        id={assignment.id}
+        name={assignment.name}
+        completed={assignment.completed}
+        key={assignment.id}
+        toggleassignmentCompleted={toggleassignmentCompleted}
       />
     ));
 
@@ -56,17 +56,17 @@ function App(props) {
     />
   ));
 
-  const tasksNoun = taskList.length !== 1 ? "tasks" : "task";
-  const headingText = `${taskList.length} ${tasksNoun} remaining`;
+  const assignmentsNoun = assignmentList.length !== 1 ? "assignments" : "assignment";
+  const headingText = `${assignmentList.length} ${assignmentsNoun} remaining`;
 
   const listHeadingRef = useRef(null);
-  const prevTaskLength = usePrevious(tasks.length);
+  const prevassignmentLength = usePrevious(assignments.length);
 
   useEffect(() => {
-    if (tasks.length - prevTaskLength === -1) {
+    if (assignments.length - prevassignmentLength === -1) {
       listHeadingRef.current.focus();
     }
-  }, [tasks.length, prevTaskLength]);
+  }, [assignments.length, prevassignmentLength]);
 
   return (
     <div className="todoapp stack-large">
@@ -77,7 +77,7 @@ function App(props) {
       <ul
         className="todo-list stack-large stack-exception"
         aria-labelledby="list-heading">
-        {taskList}
+        {assignmentList}
       </ul>
     </div>
   );

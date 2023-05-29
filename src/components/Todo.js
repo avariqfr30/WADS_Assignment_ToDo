@@ -9,7 +9,7 @@ import React from "react";
 //   return ref.current;
 // }
 
-export default function Todo(props) {
+export default function Assignment(props) {
   const viewTemplate = (
     <div className="stack-small">
       <div className="c-cb">
@@ -17,9 +17,9 @@ export default function Todo(props) {
             id={props.id}
             type="checkbox"
             defaultChecked={props.completed}
-            onChange={() => props.toggleTaskCompleted(props.id)}
+            onChange={() => props.toggleassignmentCompleted(props.id)}
           />
-          <label className="todo-label" htmlFor={props.id}>
+          <label className="Assignment-label" htmlFor={props.id}>
             {props.name}
           </label>
         </div>
@@ -27,5 +27,5 @@ export default function Todo(props) {
   );
 
 
-  return <li className="todo">{viewTemplate}</li>;
+  return <li className="Assignment">{viewTemplate}</li>;
 }
